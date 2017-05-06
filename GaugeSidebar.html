@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      const MAX_ALLOWED_CELLS = 2000000;
+      const UPDATE_INTERVAL_MS = 1500
+      
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['% Full', 0],
+        ]);
+
+        var options = {
+          width: 280, height: 280,
+          greenFrom: 0, greenTo: 90,
+          redFrom: 95, redTo: 100,
+          yellowFrom:90, yellowTo: 95,
+          minorTicks: 5,
+          animation: {
+            easing: 'out'
+          }
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+        
+        setInterval(updateChart, UPDATE_INTERVAL_MS);
+
+        function updateChart() {
+      
+          google.script.run.withSuccessHandler(onGetUsageStatsSuccess)
+          .withFailureHandler(function() {
+            console.log('Error determining percent full');
+          }).getUsageStats();
+          
+          function onGetUsageStatsSuccess(sheets) {
+          
+            var largestSheetName;
+            var largestSheetNumCells = 0;
+            var totalNumCells = 0;
+            sheets.forEach(function(sheet) {
+              var numCellsOnSheet = sheet.maxRows * sheet.maxColumns;
+              if (numCellsOnSheet > largestSheetNumCells) {
+                largestSheetNumCells = numCellsOnSheet;
+                largestSheetName = sheet.name;
+              }
+              totalNumCells += numCellsOnSheet;
+            });
+            
+            var percentFull = totalNumCells / MAX_ALLOWED_CELLS * 100;
+            
+            var percentFullStr = Number(totalNumCells / MAX_ALLOWED_CELLS).toLocaleString(undefined, {style: 'percent'});
+            var largestSheetNumCellsStr = Number(largestSheetNumCells).toLocaleString();
+            var totalNumCellsStr = Number(totalNumCells).toLocaleString();
+            
+            var messageElement = document.getElementById("message");
+            
+            messageElement.innerHTML = '<p>Each Google Sheet spreadsheet can support up to 2 million cells. Your spreadsheet is currently '
+              + percentFullStr + " full with "
+              + totalNumCellsStr + " cells." 
+             
+            var largestSheetMessageText = document.createTextNode('Your largest sheet is "' + largestSheetName + '", which contains '
+              + largestSheetNumCellsStr + ' cells.');
+              
+            messageElement.appendChild(largestSheetMessageText);
+            
+            data.setValue(0, 1, percentFull);
+            chart.draw(data, options);
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div id="chart_div" style="width: 280px; height: 280px;"></div>
+      <div id="message">
+        <p/>Loading spreadsheet stats...
+      </div>
+      <div class="secondary">
+        <p style="text-align:center;">Powered by Tiller, the effortless way to automatically feed your bank data into a Google Sheet.</p>
+      </div>
+      <div style="text-align:center">
+        <a href="https://www.tillerhq.com?utm_medium=SizeMySheet&utm_source=AddOn&utm_campaign=SidebarLearnMore">Learn more about Tiller here</a>
+      </div>
+    </div>
+  </body>
+ </html>
+
+
+
