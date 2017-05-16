@@ -52,3 +52,30 @@ function showGaugeSidebar() {
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
 }  
 
+/**
+ * Function for users to call from their sheet within a cell to get the count/percent
+ */
+function TillerCellsUsed ( whatType ) {
+  
+   var sheets = getUsageStats();
+   var typeFull = 0 ; 
+   var largestSheetName;
+   var largestSheetNumCells = 0;
+   var totalNumCells = 0;
+  
+   sheets.forEach(function(sheet) {
+      var numCellsOnSheet = sheet.maxRows * sheet.maxColumns;
+      if (numCellsOnSheet > largestSheetNumCells) {
+          largestSheetNumCells = numCellsOnSheet;
+          largestSheetName = sheet.name;
+       }
+       totalNumCells += numCellsOnSheet;
+   });
+  
+  if (whatType == 'percent')
+     typeFull = totalNumCells / 2000000 * 100 ;
+  else
+     typeFull = totalNumCells ;
+  
+  return typeFull ;
+}
