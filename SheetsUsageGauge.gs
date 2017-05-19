@@ -65,7 +65,7 @@ function TillerCellsUsed ( whatType ) {
        totalNumCells += sheet.maxRows * sheet.maxColumns;
    });
   
-  if (whatType && (whatType.toLowerCase() == ‘percent’))
+  if (whatType && (whatType.toLowerCase() == 'percent'))
      typeFull = totalNumCells / 2000000 * 100 ;
   else
      typeFull = totalNumCells ;
