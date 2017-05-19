@@ -52,3 +52,23 @@ function showGaugeSidebar() {
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
 }  
 
+/**
+ * Function for users to call from their sheet within a cell to get the count/percent
+ */
+function TillerCellsUsed ( whatType ) {
+  
+   var sheets = getUsageStats();
+   var typeFull = 0 ; 
+   var totalNumCells = 0;
+  
+   sheets.forEach(function(sheet) {
+       totalNumCells += sheet.maxRows * sheet.maxColumns;
+   });
+  
+  if (whatType && (whatType.toLowerCase() == ‘percent’))
+     typeFull = totalNumCells / 2000000 * 100 ;
+  else
+     typeFull = totalNumCells ;
+  
+  return typeFull ;
+}
