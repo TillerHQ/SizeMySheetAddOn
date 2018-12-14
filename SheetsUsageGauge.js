@@ -66,9 +66,10 @@ function TillerCellsUsed ( whatType ) {
    });
   
   if (whatType && (whatType.toLowerCase() == 'percent'))
-     typeFull = totalNumCells / 2000000 * 100 ;
+     typeFull = totalNumCells / 5000000 * 100 ;
   else
      typeFull = totalNumCells ;
   
   return typeFull ;
 }
+
