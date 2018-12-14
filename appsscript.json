@@ -1,0 +1,10 @@
+{
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/script.container.ui",
+    "https://www.googleapis.com/auth/spreadsheets.currentonly"
+  ],
+  "exceptionLogging": "STACKDRIVER"
+}
