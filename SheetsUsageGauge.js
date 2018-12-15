@@ -53,6 +53,7 @@ function showGaugeSidebar() {
 }  
 
 /**
+
  * Cells used in this spreadsheet
  *
  * @param {string} [whatType] - Optionally pass "percent" to 
@@ -72,7 +73,7 @@ function TILLERCELLSUSED ( whatType ) {
    sheets.forEach(function(sheet) {
        totalNumCells += sheet.maxRows * sheet.maxColumns;
    });
-
+  
   if (whatType && (whatType.toLowerCase() == 'percent'))
      typeFull = totalNumCells / 5000000 * 100 ;
   else
