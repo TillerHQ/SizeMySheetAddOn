@@ -53,9 +53,17 @@ function showGaugeSidebar() {
 }  
 
 /**
- * Function for users to call from their sheet within a cell to get the count/percent
+ * Cells used in this spreadsheet
+ *
+ * @param {string} [whatType] - Optionally pass "percent" to 
+ * return the percentage rather than the count of cells used 
+ * in this spreadsheet.
+ *
+ * @return {number} the count of cells used in this spreadsheet, or
+ * optionally the percentage of cells used in this spreadsheet
+ * @customfunction
  */
-function TillerCellsUsed ( whatType ) {
+function TILLERCELLSUSED ( whatType ) {
   
    var sheets = getUsageStats();
    var typeFull = 0 ; 
@@ -64,9 +72,9 @@ function TillerCellsUsed ( whatType ) {
    sheets.forEach(function(sheet) {
        totalNumCells += sheet.maxRows * sheet.maxColumns;
    });
-  
+
   if (whatType && (whatType.toLowerCase() == 'percent'))
-     typeFull = totalNumCells / 2000000 * 100 ;
+     typeFull = totalNumCells / 5000000 * 100 ;
   else
      typeFull = totalNumCells ;
   

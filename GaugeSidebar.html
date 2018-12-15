@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      const MAX_ALLOWED_CELLS = 2000000;
+      const MAX_ALLOWED_CELLS = 5000000;
       const UPDATE_INTERVAL_MS = 1500
       
       google.charts.load('current', {'packages':['gauge']});
@@ -64,7 +64,7 @@
             
             var messageElement = document.getElementById("message");
             
-            messageElement.innerHTML = '<p>Each Google Sheet spreadsheet can support up to 2 million cells. Your spreadsheet is currently '
+            messageElement.innerHTML = '<p>Each Google Sheet spreadsheet can support up to 5 million cells. Your spreadsheet is currently '
               + percentFullStr + " full with "
               + totalNumCellsStr + " cells." 
              
@@ -95,6 +95,5 @@
     </div>
   </body>
  </html>
-
 
 
