@@ -75,7 +75,7 @@ function TILLERCELLSUSED ( whatType ) {
    });
   
   if (whatType && (whatType.toLowerCase() == 'percent'))
-     typeFull = totalNumCells / 5000000 * 100 ;
+     typeFull = totalNumCells / 10000000 * 100 ;
   else
      typeFull = totalNumCells ;
   
